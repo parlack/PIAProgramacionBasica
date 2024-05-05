@@ -13,7 +13,7 @@ def menu(menuPrin):
   print('5. Borrar todo ')
   print('6. Salir ')
   #mentira
-  
+  #verdad
 
 
 ciudad = input('Ingrese su ciudad: ')
