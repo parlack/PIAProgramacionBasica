@@ -16,6 +16,14 @@ def menu(menuPrin):
 
 
 ciudad = input('Ingrese su ciudad: ')
+i = 0
+while i < len(ciudad):
+    carac = ciudad[i]
+    if  (ord(carac)>=48 and ord(carac)<=57):
+        print ('Indique una ciudad válida')
+        ciudad = input('Ingrese su ciudad:\n')
+
+
 ciudadtoapi = ciudad.replace(' ','%20')
 response = requests.request("GET", f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{ciudadtoapi}?unitGroup=metric&include=hours%2Calerts%2Cevents%2Ccurrent%2Cdays&key=UMWHQ8PEMQ54XH8C2SU2RNVPS&contentType=json")
 
