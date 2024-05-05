@@ -12,8 +12,7 @@ def menu(menuPrin):
   print('4. Gráficas')
   print('5. Borrar todo ')
   print('6. Salir ')
-  #mentira
-  #verdad
+
 
 
 ciudad = input('Ingrese su ciudad: ')
