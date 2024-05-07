@@ -1,45 +1,59 @@
 import json 
+import pytz
+from datetime import datetime
+import re
 
 with open('Reportes_Consulta_API/Datos_completos_clima.json', 'r') as f:
     datos = json.load(f)
 
 
-def consultTempAct(datajson):
+def consultTempActEst():
 
-    for dia in datajson['days']:
-        temp = dia['temp']
-query_cost = datos['queryCost']
-resolved_address = datos['resolvedAddress']
+    timezone = datos['timezone']
+    tz = pytz.timezone(timezone)
+    datafechaact = datetime.now(tz)
+    fechaact=str(datafechaact.strftime('%Y-%m-%d'))
+    horaact=str(datafechaact.strftime('%H:00:00'))
+
+    temp=0;
+    for dia in datos['days']:
+        fecha = dia['datetime']
+        if fecha==fechaact:
+            for time in dia['hours']:
+                hora_del_dia = time['datetime']
+                if horaact==hora_del_dia:
+                    temp= time['feelslike']
+                    return temp
+                    
+
+def probprecipitaciondia():
+    timezone = datos['timezone']
+    tz = pytz.timezone(timezone)
+    datafechaact = datetime.now(tz)
+    fechaact=str(datafechaact.strftime('%Y-%m-%d'))
+
+    for dia in datos['days']:
+        fecha = dia['datetime']
+        if fecha==fechaact:
+            precip_prob = dia['precipprob']
+            return precip_prob
+                
+def probprecipitacionprox12h():
+    timezone = datos['timezone']
+    tz = pytz.timezone(timezone)
+    datafechaact = datetime.now(tz)
+    fechaact=str(datafechaact.strftime('%Y-%m-%d'))
+    horaact=str(datafechaact.strftime('%H:00:00'))
+
+ 
 
 
 
-print("Ciudad actual:", resolved_address)
-
-for dia in datos['days']:
-    fecha = dia['datetime']
-    temp_max = dia['tempmax']
-    temp_min = dia['tempmin']
-    temp = dia['temp']
-    precip_prob = dia['precipprob']
-    conditions = dia['conditions']
-
-    print("\nFecha:", fecha)
-    print("Temperatura Máxima:", temp_max)
-    print("Temperatura Mínima:", temp_min)
-    print("Temperatura del dia:", temp)
-    print("Probabilidad de Precipitación:", precip_prob)
-    print("Condiciones:", conditions)
-
-    # Extraer datos por hora
-    for hora in dia['hours']:
-        hora_del_dia = hora['datetime']
-        temperatura = hora['temp']
-        precipitacion = hora['precip']
 
 
-        print("\tHora:", hora_del_dia)
-        print("\tTemperatura:", temperatura)
-        print("\tPrecipitación:", precipitacion)
+
+
+
 
  
 

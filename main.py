@@ -13,7 +13,11 @@ while resp!=6:
   match resp:
     case 1:
       modd.requestAPI(input('Ingrese ciudad a consultar: '))
-      modd.menus(2)
+      resp1=modd.menus(2)
+
+      match resp1:
+        case 1:
+          print()
       
       
 

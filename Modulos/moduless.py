@@ -66,7 +66,7 @@ def menus(menuPrin):
     
     case 2:
       print('\tConsultas web:')
-      print('1. Temperatura Actual')
+      print('1. Temperatura Estimada Actual')
       print('2. Temperaturas por hora')
       print('3. Temperaturas maximas y minimas')
       print('4. Consultar Temperatura Maximas y minimas de los siguientes dias ')
