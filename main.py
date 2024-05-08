@@ -1,5 +1,5 @@
 import Modulos.moduless as modd
-
+import Modulos.datajson as datas
 
 if modd.check_internet_connection():
   dafaultcity='Monterrey'
@@ -14,14 +14,24 @@ while resp!=6:
     case 1:
       modd.requestAPI(input('Ingrese ciudad a consultar: '))
       resp1=modd.menus(2)
-
-      match resp1:
-        case 1:
-          print()
-      
-      
+      while resp1!=6:
 
     
+        match resp1:
+          case 1:
+            print('La temperatura estimada actual estimada es:',str(datas.consultTempActEst())+'°C')
+        
+          case 2:
+            datas.Climaprox12h()
+
+          case 3:
+            datas.temperaturasMinYmaxXdia()
+          case 4:
+            datas.probprecipitacionxdia()
+        resp1=modd.menus(2)
+
+
+
     case 2:
       
       modd.menus(3)
@@ -37,9 +47,3 @@ while resp!=6:
 
 
   resp=modd.menus(1)
-
-
-
-
-
-#print(jsonData)

@@ -67,14 +67,15 @@ def menus(menuPrin):
     case 2:
       print('\tConsultas web:')
       print('1. Temperatura Estimada Actual')
-      print('2. Temperaturas por hora')
-      print('3. Temperaturas maximas y minimas')
-      print('4. Consultar Temperatura Maximas y minimas de los siguientes dias ')
-      print('5. Ir a menu principal ') 
+      print('2. Temperatura de las proximas 12 horas:')
+      print('3. Consultar Temperatura minimas y Maximas de los siguientes dias:')
+      print('4. Consultar probabilidad de precipitacion de los siguientes dias:')
+      print('6. Ir a menu principal ') 
       resp=input('Ingrese la opcion del menu: ')
       while ValRangoNums(1,5,resp)==False:
         resp=input('Ingrese la opcion del menu: ')
       return int(resp)
+     
     
     case 3:
       print('\tConsultas de registros:')
