@@ -1,34 +1,49 @@
-import json
-import sys
+import Modulos.moduless as modd
+import Modulos.datajson as datas
 
-import requests
+if modd.check_internet_connection():
+  dafaultcity='Monterrey'
+  print(f'Ciudad por default: {dafaultcity}')
+  modd.requestAPI(dafaultcity)
+else:
+  print('Error al cargar datos,Favor de conectarse a internet para tener los datos mas actualizados, se trabajara con los ultimos datos actualizados')
+
+resp=modd.menus(1)
+while resp!=6:
+  match resp:
+    case 1:
+      modd.requestAPI(input('Ingrese ciudad a consultar: '))
+      resp1=modd.menus(2)
+      while resp1!=6:
+
+    
+        match resp1:
+          case 1:
+            print('La temperatura estimada actual estimada es:',str(datas.consultTempActEst())+'°C')
+        
+          case 2:
+            datas.Climaprox12h()
+
+          case 3:
+            datas.temperaturasMinYmaxXdia()
+          case 4:
+            datas.probprecipitacionxdia()
+        resp1=modd.menus(2)
 
 
-def menu(menuPrin):
-  print('\tMenú:')
-  print('1. Consultas web')
-  print('2. Consultas de registros')
-  print('3. Estadísticas')
-  print('4. Gráficas')
-  print('5. Borrar todo ')
-  print('6. Salir ')
+
+    case 2:
+      
+      modd.menus(3)
+
+    case 3:
+      modd.menus(4)
+
+    case 4:
+      modd.menus(5)
+
+    case 5:
+      modd.menus(6)
 
 
-
-ciudad = input('Ingrese su ciudad: ')
-ciudadtoapi = ciudad.replace(' ','%20')
-response = requests.request("GET", f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{ciudadtoapi}?unitGroup=metric&include=hours%2Calerts%2Cevents%2Ccurrent%2Cdays&key=UMWHQ8PEMQ54XH8C2SU2RNVPS&contentType=json")
-
-if response.status_code!=200:
-  print('Unexpected Status code: ', response.status_code)
-  sys.exit()  
-
-jsonData =  json.dumps(response.json(),indent=4)
-with open('Reportes_Consulta_API/Datos.json', 'w') as archivo:
-  archivo.write(jsonData)
-
-
-
-
-
-#print(jsonData)
+  resp=modd.menus(1)
