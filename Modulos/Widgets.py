@@ -3,7 +3,7 @@ from tkinter import ttk
 from tkcalendar import Calendar
 from datetime import datetime
 
-fecha_seleccionada = None  # Variable global para almacenar la fecha seleccionada
+fecha_seleccionada = None  # Varia para almacenar la fecha global seleccionada
 
 def obtener_fecha(root, cal):
     global fecha_seleccionada
@@ -29,7 +29,5 @@ def getdatecalendar(iniciolimite, finlimite):
     
     return fecha_seleccionada
 
-
-# Llamada a la función y luego impresión de la fecha seleccionada
 
 

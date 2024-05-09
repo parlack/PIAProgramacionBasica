@@ -58,7 +58,7 @@ def probprecipitacionxdia():
         fecha = dia['datetime']
         if fecha==fechaconsulta:
             precip_prob = dia['precipprob']
-            print(f'La probabilidad de precipitacion del dia {fechaconsulta} es:',precip_prob)
+            print(f'La probabilidad de precipitacion del dia {fechaconsulta} es:',str(precip_prob)+'%')
             
 
 def Climaprox12h():
