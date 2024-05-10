@@ -1,21 +1,27 @@
 import json 
 import pytz
 from datetime import datetime
-import re
-import Modulos.Widgets as wg
+import Widgets as wg
 
-with open('Reportes_Consulta_API/Datos_completos_clima.json', 'r') as f:
-    datos = json.load(f)
+def data():
+    with open('Reportes_Consulta_API/Datos_completos_clima.json', 'r') as f:
+        datos = json.load(f)
+    return datos
+
+
+
+def getcity():
+    return data()['address']
 
 def ultimafecha():
     ultimodia=''
-    for dia in datos['days']:
+    for dia in data()['days']:
         ultimodia = dia['datetime']
     return ultimodia
         
 
 def getdatecalendar():
-    timezone = datos['timezone']
+    timezone = data()['timezone']
     tz = pytz.timezone(timezone)
     datafechaact = datetime.now(tz)
     fechaact=str(datafechaact.strftime('%Y-%m-%d'))
@@ -26,25 +32,22 @@ def getdatecalendar():
 
 
 def consultTempActEst():
-    timezone = datos['timezone']
+    timezone = data()['timezone']
     tz = pytz.timezone(timezone)
     datafechaact = datetime.now(tz)
     fechaact=str(datafechaact.strftime('%Y-%m-%d'))
     horaact=str(datafechaact.strftime('%H:00:00'))
 
-    temp=0;
-    for dia in datos['days']:
-        fecha = dia['datetime']
-        if fecha==fechaact:
-            for time in dia['hours']:
-                hora_del_dia = time['datetime']
-                if horaact==hora_del_dia:
-                    temp= time['feelslike']
-                    return temp
+def consultTempAct():
+
+    return data()['currentConditions']['temp']
+
+
+
 
 def temperaturasMinYmaxXdia():
     fechaconsulta=getdatecalendar()
-    for dia in datos['days']:
+    for dia in data()['days']:
         fecha = dia['datetime']
         if fecha==fechaconsulta:
             print(f'Dia: {fechaconsulta}')
@@ -54,7 +57,7 @@ def temperaturasMinYmaxXdia():
 def probprecipitacionxdia():
     fechaconsulta=getdatecalendar()
 
-    for dia in datos['days']:
+    for dia in data()['days']:
         fecha = dia['datetime']
         if fecha==fechaconsulta:
             precip_prob = dia['precipprob']
@@ -62,7 +65,7 @@ def probprecipitacionxdia():
             
 
 def Climaprox12h():
-    timezone = datos['timezone']
+    timezone = data()['timezone']
     tz = pytz.timezone(timezone)
     datafechaact = datetime.now(tz)
 
@@ -77,7 +80,7 @@ def Climaprox12h():
             horaact=horafecha-24-i
             cambiodia+=1
             
-        for dia in datos['days']:
+        for dia in data()['days']:
             diaa=int(datafechaact.strftime('%d'))+cambiodia
             formatodia=str(str(diaa).zfill(2))
 
@@ -94,4 +97,4 @@ def Climaprox12h():
                         print('Temperatura:',Temp)
                         
          
-
+print(consultTempAct())

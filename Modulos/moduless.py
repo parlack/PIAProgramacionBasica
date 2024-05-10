@@ -61,6 +61,7 @@ def menus(menuPrin):
       print('6. Salir ')
       resp=input('Ingrese la opcion del menu: ')
       while ValRangoNums(1,6,resp)==False:
+        print('Respuesta invalida, ingrese una opcion correcta')
         resp=input('Ingrese la opcion del menu: ')
       return int(resp)
     
@@ -70,16 +71,27 @@ def menus(menuPrin):
       print('2. Temperatura de las proximas 12 horas:')
       print('3. Consultar Temperatura minimas y Maximas de los siguientes dias:')
       print('4. Consultar probabilidad de precipitacion de los siguientes dias:')
+      print('5. Cambiar de ciudad')
       print('6. Ir a menu principal ') 
       resp=input('Ingrese la opcion del menu: ')
-      while ValRangoNums(1,5,resp)==False:
+      while ValRangoNums(1,6,resp)==False:
+        print('Respuesta invalida, ingrese una opcion correcta')
         resp=input('Ingrese la opcion del menu: ')
       return int(resp)
-     
     
     case 3:
       print('\tConsultas de registros:')
-    
+      print('1. Temperatura Estimada Actual:')
+      print('2. Temperatura de las proximas 12 horas:')
+      print('3. Consultar Temperatura minimas y Maximas de los siguientes dias:')
+      print('4. Consultar probabilidad de precipitacion de los siguientes dias:')
+      print('5. Ir a menu principal ') 
+      resp=input('Ingrese la opcion del menu: ')
+      while ValRangoNums(1,5,resp)==False:
+        print('Respuesta invalida, ingrese una opcion correcta')
+        resp=input('Ingrese la opcion del menu: ')
+      return int(resp)
+     
     case 4:
       print('\tEstadísticas:')
 
