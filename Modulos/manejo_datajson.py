@@ -8,8 +8,14 @@ from colorama import Fore, Style, init
 from openpyxl import load_workbook
 from openpyxl import Workbook
 
+
+citty='Monterrey'
+
 def requestAPI(city):
+    global citty
+    citty=city.replace(' ','_')
     ciudadtoapi = city.replace(' ','%20')
+    
     response = requests.request("GET", f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{ciudadtoapi}?unitGroup=metric&include=hours%2Calerts%2Cevents%2Ccurrent%2Cdays&key=UMWHQ8PEMQ54XH8C2SU2RNVPS&contentType=json")
 
     if response.status_code!=200:
@@ -18,14 +24,27 @@ def requestAPI(city):
         requestAPI(input('Ingrese ciudad a consultar: '))
     else:
       jsonData =  json.dumps(response.json(),indent=4)
-      with open('Reportes_Consulta_API/Datos_completos_clima.json', 'w') as archivo:
+      global fecha
+      fecha=json.loads(jsonData)['days'][0]['datetime']
+      with open(f'Reportes_Consulta_API/data_{citty}_{fecha}.json', 'w') as archivo:
+        archivo.write(jsonData)
+        
+    if citty=='Monterrey':
+      jsonData =  json.dumps(response.json(),indent=4)
+      with open(f'Reportes_Consulta_API/data_{citty}.json', 'w') as archivo:
         archivo.write(jsonData)
 
+requestAPI('San nicolas de los garza')
 
 def data():
-    with open('Reportes_Consulta_API/Datos_completos_clima.json', 'r') as f:
-        datos = json.load(f)
-    return datos
+    try:
+        with open(f'Reportes_Consulta_API/data_{citty}_{fecha}.json', 'r') as f:
+            datos = json.load(f)
+        return datos
+    except:
+        with open(f'Reportes_Consulta_API/data_{citty}.json', 'r') as f:
+            datos = json.load(f)
+        return datos
 
 def getcity():
     return data()['resolvedAddress']
@@ -146,6 +165,7 @@ def PromTempProxDias():
         wb.save(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
         wb = load_workbook(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
         ws = wb.active
+        ws['E1'] = 'Indice UV'
         ws['D1'] = 'Radiacion solar'
         ws['C1'] = 'Humedad'
         ws['B1'] = 'Temperaturas'
@@ -182,6 +202,7 @@ def PromHumedadProxDias():
         wb.save(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
         wb = load_workbook(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
         ws = wb.active
+        ws['E1'] = 'Indice UV'
         ws['D1'] = 'Radiacion solar'
         ws['C1'] = 'Humedad'
         ws['B1'] = 'Temperaturas'
@@ -219,6 +240,7 @@ def PromRadiacionSolar():
         wb.save(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
         wb = load_workbook(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
         ws = wb.active
+        ws['E1'] = 'Indice UV'
         ws['D1'] = 'Radiacion solar'
         ws['C1'] = 'Humedad'
         ws['B1'] = 'Temperaturas'
@@ -256,6 +278,7 @@ def PromIndiceuv():
         wb.save(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
         wb = load_workbook(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
         ws = wb.active
+        ws['E1'] = 'Indice UV'
         ws['D1'] = 'Radiacion solar'
         ws['C1'] = 'Humedad'
         ws['B1'] = 'Temperaturas'
@@ -293,6 +316,7 @@ def diaMayorTemperatura():
         wb.save(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
         wb = load_workbook(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
         ws = wb.active
+        ws['E1'] = 'Indice UV'
         ws['D1'] = 'Radiacion solar'
         ws['C1'] = 'Humedad'
         ws['B1'] = 'Temperaturas'
@@ -326,6 +350,7 @@ def diamenorTemperatura():
         wb.save(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
         wb = load_workbook(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
         ws = wb.active
+        ws['E1'] = 'Indice UV'
         ws['D1'] = 'Radiacion solar'
         ws['C1'] = 'Humedad'
         ws['B1'] = 'Temperaturas'
