@@ -25,18 +25,16 @@ def requestAPI(city):
     else:
       jsonData =  json.dumps(response.json(),indent=4)
       global fecha
-      with open(f'Reportes_Consulta_API/temp.json', 'w') as archivo:
-        archivo.write(jsonData)
-      with open(f'Reportes_Consulta_API/temp.json', 'r') as archivo:
-        fecha=json.load(archivo)['days'][0]['datetime']
+      fecha=json.loads(jsonData)['days'][0]['datetime']
       with open(f'Reportes_Consulta_API/data_{citty}_{fecha}.json', 'w') as archivo:
         archivo.write(jsonData)
-    
+        
     if citty=='Monterrey':
       jsonData =  json.dumps(response.json(),indent=4)
       with open(f'Reportes_Consulta_API/data_{citty}.json', 'w') as archivo:
         archivo.write(jsonData)
 
+requestAPI('San nicolas de los garza')
 
 def data():
     try:

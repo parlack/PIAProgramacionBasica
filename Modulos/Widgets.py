@@ -3,16 +3,15 @@ from tkinter import ttk
 from tkcalendar import Calendar
 from datetime import datetime
 
-fecha_seleccionada = None  # Varia para almacenar la fecha global seleccionada
+fecha_seleccionada = None  
 
 def obtener_fecha(root, cal):
     global fecha_seleccionada
     fecha_seleccionada = cal.get_date()
-    root.destroy()  # Cierra la ventana después de obtener la fecha
+    root.destroy()  
 
 def getdatecalendar(iniciolimite, finlimite):
     global fecha_seleccionada
-    # Convertir las fechas de string a objetos datetime
     iniciolimite_dt = datetime.strptime(iniciolimite, "%Y-%m-%d")
     finlimite_dt = datetime.strptime(finlimite, "%Y-%m-%d")
 

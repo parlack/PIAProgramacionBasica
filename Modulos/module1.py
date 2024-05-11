@@ -1,6 +1,6 @@
-
 import re
 import urllib.request
+import os
 from colorama import Fore, Style, init
 
 
@@ -23,7 +23,17 @@ def check_internet_connection():
     except urllib.error.URLError:
         return False
 
+def borrar_archivos_en_carpeta(ruta_carpeta):
+
+    archivos = os.listdir(ruta_carpeta)
+    for archivo in archivos:
+        ruta_archivo = os.path.join(ruta_carpeta, archivo)
+        if os.path.isfile(ruta_archivo):
+            os.remove(ruta_archivo)
+            print(f"Se ha borrado {ruta_archivo}")
+
 def menus(numbermenu):
+
 
   match numbermenu:
     case 1:
