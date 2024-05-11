@@ -34,8 +34,6 @@ def requestAPI(city):
       with open(f'Reportes_Consulta_API/data_{citty}.json', 'w') as archivo:
         archivo.write(jsonData)
 
-requestAPI('San nicolas de los garza')
-
 def data():
     try:
         with open(f'Reportes_Consulta_API/data_{citty}_{fecha}.json', 'r') as f:
@@ -178,7 +176,6 @@ def PromTempProxDias():
 
     temp_sum = 0
     for i in range(15):
-        print(data()['days'][i]['temp'])
         temp = data()['days'][i]['temp']
         ws[f'B{i+2}'] = temp
         temp_sum += temp
@@ -214,7 +211,6 @@ def PromHumedadProxDias():
         ws['C21'] = 'Fecha'
         
     for i in range(15):
-        print(data()['days'][i]['humidity'])
         ws[f'C{i+2}']=data()['days'][i]['humidity']
     humidity_sum = 0
     for i in range(15):
@@ -252,7 +248,6 @@ def PromRadiacionSolar():
         ws['C21'] = 'Fecha'
         
     for i in range(15):
-        print(data()['days'][i]['solarradiation'])
         ws[f'D{i+2}']=data()['days'][i]['solarradiation']
     radsol_sum = 0
     for i in range(15):
@@ -290,7 +285,6 @@ def PromIndiceuv():
         ws['C21'] = 'Fecha'
         
     for i in range(15):
-        print(data()['days'][i]['uvindex'])
         ws[f'E{i+2}']=data()['days'][i]['uvindex']
     uvindex_sum = 0
     for i in range(15):

@@ -71,17 +71,17 @@ if __name__ == '__main__':
           while resp3!=7:
             match resp3:
               case 1:
-                print('Promedio de Temperatura:', datas.PromTempProxDias())
+                print(Fore.GREEN,'Promedio de Temperatura:', datas.PromTempProxDias(),Style.RESET_ALL)
               case 2:
-                print('Promedio de Humedad:',datas.PromHumedadProxDias())
+                print(Fore.GREEN,'Promedio de Humedad:',datas.PromHumedadProxDias(),Style.RESET_ALL)
               case 3:
-                print('Promedio de radiacion solar:',datas.PromRadiacionSolar())
+                print(Fore.GREEN,'Promedio de radiacion solar:',datas.PromRadiacionSolar(),Style.RESET_ALL)
               case 4:
-                print('Promedio de indice uv:', datas.PromIndiceuv())
+                print(Fore.GREEN,'Promedio de indice uv:', datas.PromIndiceuv(),Style.RESET_ALL)
               case 5:
-                print('El dia con mayor temperatura es:',str(datas.diaMayorTemperatura()[0])+',','con una temperatura de',str(datas.diaMayorTemperatura()[1])+'°C')
+                print(Fore.GREEN,'El dia con mayor temperatura es:',str(datas.diaMayorTemperatura()[0])+',','con una temperatura de',str(datas.diaMayorTemperatura()[1])+'°C',Style.RESET_ALL)
               case 6:
-                print('El dia con menor temperatura es:',str(datas.diamenorTemperatura()[0])+',','con una temperatura de',str(datas.diamenorTemperatura()[1])+'°C')
+                print(Fore.GREEN,'El dia con menor temperatura es:',str(datas.diamenorTemperatura()[0])+',','con una temperatura de',str(datas.diamenorTemperatura()[1])+'°C',Style.RESET_ALL)
 
             resp3=modd.menus(4)
         except:
