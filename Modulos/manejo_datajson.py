@@ -1,8 +1,9 @@
 import json 
 import pytz
-import Modulos.Widgets as wg
+import Widgets as wg
 import requests
 import json
+import matplotlib.pyplot as plt
 from datetime import datetime
 from colorama import Fore, Style, init
 from openpyxl import load_workbook
@@ -367,5 +368,44 @@ def diamenorTemperatura():
 
     return dia,tempmin
 
+def graficalinealtemperaturas():
+    day_hour=[]
+    temps=[]
+    for day in data()['days']:
+        for hour in day['hours']:
+            temps.append(hour['temp']) 
+            day_hour.append(str(day['datetime'])+'_'+str(hour['datetime']))
+    plt.subplot2grid((2,2),(0,0), colspan=2, rowspan=2)
+    plt.plot(day_hour,temps)
+    plt.xticks(rotation=90, color='white')
+    plt.show()
 
+def graficabarrastemperaturas():
+    
+    fechas = []
+    minimos = []
+    maximos = []
+    
+    for day in data()['days']:
+        fechas.append(day['datetime'])
+        minimos.append(day['tempmin']) 
+        maximos.append(day['tempmax']) 
+    
+    centros = range(len(fechas))
+
+    alturas = [maximos[i] - minimos[i] for i in range(len(fechas))]
+
+    plt.bar(centros, alturas, bottom=minimos, color='blue', alpha=0.7, align='center', edgecolor='black')
+
+    # Añadir etiquetas y título
+    plt.xlabel('Categorías')
+    plt.ylabel('Valores')
+    plt.title('Temperaturas maximas y minimas')
+
+    plt.xticks(centros, fechas,rotation=90)
+
+    plt.show()
+
+
+graficalinealtemperaturas()
     
