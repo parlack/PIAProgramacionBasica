@@ -27,10 +27,8 @@ if __name__ == '__main__':
             match resp1:
               case 1:
                 print(Fore.GREEN,'La temperatura actual es:',str(datas.consultTempAct())+'°C',Style.RESET_ALL)
-          
               case 2:
                 datas.Climaprox12h()
-
               case 3:
                 datas.temperaturasMinYmaxXdia()
               case 4:
@@ -40,8 +38,6 @@ if __name__ == '__main__':
             resp1=modd.menus(2)
         else:
           print('Ciudad registrada:', datas.getcity())
-
-
 
 
       case 2:
@@ -64,7 +60,7 @@ if __name__ == '__main__':
                 datas.temperaturasMinYmaxXdia()
               case 4:
                 datas.probprecipitacionxdia()
-            resp1=modd.menus(3)
+            resp2=modd.menus(3)
 
       case 3:
         print('El registro de fecha que se tiene es desde',datas.fechas(1),'hasta',datas.fechas(15))

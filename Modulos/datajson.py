@@ -41,8 +41,8 @@ def getdatecalendar():
     tz = pytz.timezone(timezone)
     datafechaact = datetime.now(tz)
     fechaact=str(datafechaact.strftime('%Y-%m-%d'))
-    fecha_d_m_aa  = str(wg.getdatecalendar(fechaact,fechas(15))) 
-    fecha_datetime = datetime.strptime(fecha_d_m_aa, "%d/%m/%y")
+    fecha_d_m_aa  = wg.getdatecalendar(fechaact,fechas(15))
+    fecha_datetime = datetime.strptime(fecha_d_m_aa, "%m/%d/%y")
     fecha_aaaa_mm_dd = fecha_datetime.strftime("%Y-%m-%d")
     return fecha_aaaa_mm_dd
 
