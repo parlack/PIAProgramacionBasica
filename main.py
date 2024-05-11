@@ -34,7 +34,7 @@ if __name__ == '__main__':
               case 4:
                 datas.probprecipitacionxdia()
               case 5:
-                modd.requestAPI(input('Ingrese ciudad a consultar: '))
+                datas.requestAPI(input('Ingrese ciudad a consultar: '))
             resp1=modd.menus(2)
         else:
           print('Ciudad registrada:', datas.getcity())
