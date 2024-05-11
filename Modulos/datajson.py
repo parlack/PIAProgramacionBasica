@@ -1,10 +1,25 @@
 import json 
 import pytz
 import Modulos.Widgets as wg
+import requests
+import json
 from datetime import datetime
-from colorama import Fore, Back, Style, init
+from colorama import Fore, Style, init
 from openpyxl import load_workbook
 from openpyxl import Workbook
+
+def requestAPI(city):
+    ciudadtoapi = city.replace(' ','%20')
+    response = requests.request("GET", f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{ciudadtoapi}?unitGroup=metric&include=hours%2Calerts%2Cevents%2Ccurrent%2Cdays&key=UMWHQ8PEMQ54XH8C2SU2RNVPS&contentType=json")
+
+    if response.status_code!=200:
+        print(Fore.RED,'Unexpected Status code: ', response.status_code,Style.RESET_ALL)  
+        print('Intente nuevamente:')
+        requestAPI(input('Ingrese ciudad a consultar: '))
+    else:
+      jsonData =  json.dumps(response.json(),indent=4)
+      with open('Reportes_Consulta_API/Datos_completos_clima.json', 'w') as archivo:
+        archivo.write(jsonData)
 
 
 def data():
@@ -15,9 +30,11 @@ def data():
 def getcity():
     return data()['resolvedAddress']
 
-def fechas(num):
+def getcitystr():
+    return str(data()['address']) 
 
-    return data()['days'][num-1]['datetime']
+def fechas(num):
+    return str(data()['days'][num-1]['datetime'])
         
 def getdatecalendar():
     timezone = data()['timezone']
@@ -114,36 +131,34 @@ def Climaprox12h():
                         print(Fore.GREEN,f'{fecha},{hora}')
                         print('Temperatura:',Temp,Style.RESET_ALL)
        
-def loadexcel():
+
+
+
+    
+def PromTempProxDias():
     try:
-        wb = load_workbook("test.xlsx")
+        wb = load_workbook(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
         ws = wb.active
-        ws['D1'] = 'Promedio Radiacion solar'
-        ws['C1'] = 'Promedio Humedad'
-        ws['B1'] = 'Promedio Temperaturas'
-        ws['A18'] = 'Primera Fecha:'
-        ws['A17'] = 'Promedio:'
-        
+
     except FileNotFoundError:
         wb = Workbook()
         ws = wb.active
-        ws['E1'] = 'Promedio indice uv'
-        ws['D1'] = 'Promedio Radiacion solar'
-        ws['C1'] = 'Promedio Humedad'
-        ws['B1'] = 'Promedio Temperaturas'
+        wb.save(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
+        wb = load_workbook(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
+        ws = wb.active
+        ws['D1'] = 'Radiacion solar'
+        ws['C1'] = 'Humedad'
+        ws['B1'] = 'Temperaturas'
         ws['A18'] = 'Primera Fecha:'
         ws['A17'] = 'Promedio:'
-       
-    return wb,ws
-                 
-def PromTempProxDias():
-    ws=loadexcel()[1]
-    wb=loadexcel()[0]
-    for i in range(15):
-        print(data()['days'][i]['temp'])
-        ws[f'B{i+2}']=data()['days'][i]['temp']
+        ws['A22'] = 'Mas grados:'
+        ws['A23'] = 'Menos grados:'
+        ws['B21'] = 'Grados'
+        ws['C21'] = 'Fecha'
+
     temp_sum = 0
     for i in range(15):
+        print(data()['days'][i]['temp'])
         temp = data()['days'][i]['temp']
         ws[f'B{i+2}'] = temp
         temp_sum += temp
@@ -153,12 +168,29 @@ def PromTempProxDias():
     
     ws['B18'] = data()['days'][0]['datetime']
     
-    wb.save("test.xlsx")
+    wb.save(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
     return round(promedio, 2)
 
 def PromHumedadProxDias():
-    ws=loadexcel()[1]
-    wb=loadexcel()[0]
+    try:
+        wb = load_workbook(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
+        ws = wb.active
+
+    except FileNotFoundError:
+        wb = Workbook()
+        ws = wb.active
+        wb.save(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
+        wb = load_workbook(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
+        ws = wb.active
+        ws['D1'] = 'Radiacion solar'
+        ws['C1'] = 'Humedad'
+        ws['B1'] = 'Temperaturas'
+        ws['A18'] = 'Primera Fecha:'
+        ws['A17'] = 'Promedio:'
+        ws['A22'] = 'Mas grados:'
+        ws['A23'] = 'Menos grados:'
+        ws['B21'] = 'Grados'
+        ws['C21'] = 'Fecha'
         
     for i in range(15):
         print(data()['days'][i]['humidity'])
@@ -173,12 +205,29 @@ def PromHumedadProxDias():
     ws['C17'] = promedio
     ws['C18'] = data()['days'][0]['datetime']
 
-    wb.save("test.xlsx")
+    wb.save(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
     return round(promedio, 2)
 
 def PromRadiacionSolar():
-    ws=loadexcel()[1]
-    wb=loadexcel()[0]
+    try:
+        wb = load_workbook(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
+        ws = wb.active
+
+    except FileNotFoundError:
+        wb = Workbook()
+        ws = wb.active
+        wb.save(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
+        wb = load_workbook(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
+        ws = wb.active
+        ws['D1'] = 'Radiacion solar'
+        ws['C1'] = 'Humedad'
+        ws['B1'] = 'Temperaturas'
+        ws['A18'] = 'Primera Fecha:'
+        ws['A17'] = 'Promedio:'
+        ws['A22'] = 'Mas grados:'
+        ws['A23'] = 'Menos grados:'
+        ws['B21'] = 'Grados'
+        ws['C21'] = 'Fecha'
         
     for i in range(15):
         print(data()['days'][i]['solarradiation'])
@@ -193,12 +242,29 @@ def PromRadiacionSolar():
     ws['D17'] = promedio
     ws['D18'] = data()['days'][0]['datetime']
 
-    wb.save("test.xlsx")
+    wb.save(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
     return round(promedio, 2)
 
 def PromIndiceuv():
-    ws=loadexcel()[1]
-    wb=loadexcel()[0]
+    try:
+        wb = load_workbook(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
+        ws = wb.active
+
+    except FileNotFoundError:
+        wb = Workbook()
+        ws = wb.active
+        wb.save(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
+        wb = load_workbook(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
+        ws = wb.active
+        ws['D1'] = 'Radiacion solar'
+        ws['C1'] = 'Humedad'
+        ws['B1'] = 'Temperaturas'
+        ws['A18'] = 'Primera Fecha:'
+        ws['A17'] = 'Promedio:'
+        ws['A22'] = 'Mas grados:'
+        ws['A23'] = 'Menos grados:'
+        ws['B21'] = 'Grados'
+        ws['C21'] = 'Fecha'
         
     for i in range(15):
         print(data()['days'][i]['uvindex'])
@@ -213,24 +279,74 @@ def PromIndiceuv():
     ws['E17'] = promedio
     ws['E18'] = data()['days'][0]['datetime']
 
-    wb.save("test.xlsx")
+    wb.save(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
     return round(promedio, 2)
 
 def diaMayorTemperatura():
+    try:
+        wb = load_workbook(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
+        ws = wb.active
+
+    except FileNotFoundError:
+        wb = Workbook()
+        ws = wb.active
+        wb.save(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
+        wb = load_workbook(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
+        ws = wb.active
+        ws['D1'] = 'Radiacion solar'
+        ws['C1'] = 'Humedad'
+        ws['B1'] = 'Temperaturas'
+        ws['A18'] = 'Primera Fecha:'
+        ws['A17'] = 'Promedio:'
+        ws['A22'] = 'Mas grados:'
+        ws['A23'] = 'Menos grados:'
+        ws['B21'] = 'Grados'
+        ws['C21'] = 'Fecha'
+        
     tempmaxima=-50
     dia=''
     for day in data()['days']:
         if tempmaxima <= day['tempmax']:
             tempmaxima=day['tempmax']
             dia=day['datetime']
+    ws['B22'] = tempmaxima
+    ws['C22'] = dia
+    wb.save(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
+
     return dia,tempmaxima
 
 def diamenorTemperatura():
+    try:
+        wb = load_workbook(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
+        ws = wb.active
+
+    except FileNotFoundError:
+        wb = Workbook()
+        ws = wb.active
+        wb.save(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
+        wb = load_workbook(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
+        ws = wb.active
+        ws['D1'] = 'Radiacion solar'
+        ws['C1'] = 'Humedad'
+        ws['B1'] = 'Temperaturas'
+        ws['A18'] = 'Primera Fecha:'
+        ws['A17'] = 'Promedio:'
+        ws['A22'] = 'Mas grados:'
+        ws['A23'] = 'Menos grados:'
+        ws['B21'] = 'Grados'
+        ws['C21'] = 'Fecha'
+         
     tempmin=50
     dia=''
     for day in data()['days']:
         if tempmin >= day['tempmin']:
             tempmin=day['tempmin']
             dia=day['datetime']
+    ws['B23'] = tempmin
+    ws['C23'] = dia
+    wb.save(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
+
     return dia,tempmin
+
+
     

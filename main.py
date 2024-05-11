@@ -1,13 +1,13 @@
 import Modulos.moduless as modd
 import Modulos.datajson as datas
-from colorama import Fore, Back, Style, init
+from colorama import Fore, Style, init
 
 if __name__ == '__main__':
   if modd.check_internet_connection():
     Internet=True
     dafaultcity='Monterrey'
     print(f'Ciudad por default: {dafaultcity}')
-    modd.requestAPI(dafaultcity)
+    datas.requestAPI(dafaultcity)
   else:
     print(Fore.RED,'Error al cargar datos,Favor de conectarse a internet para tener los datos mas actualizados, se trabajara con los ultimos datos actualizados',Style.RESET_ALL)
     print('La ciudad con registros es:', datas.getcity())
@@ -18,7 +18,7 @@ if __name__ == '__main__':
     match resp:
       case 1:
         if Internet:
-          modd.requestAPI(input('Ingrese ciudad a consultar: '))
+          datas.requestAPI(input('Ingrese ciudad a consultar: '))
           resp1=modd.menus(2)
           while resp1!=6:
 
@@ -67,9 +67,9 @@ if __name__ == '__main__':
             resp1=modd.menus(3)
 
       case 3:
+        print('El registro de fecha que se tiene es desde',datas.fechas(1),'hasta',datas.fechas(15))
         resp3=modd.menus(4)
         while resp3!=7:
-          print('El registro de fecha que se tiene es desde',datas.fechas(1),'hasta',datas.fechas(15))
           match resp3:
             case 1:
               print('Promedio de Temperatura:', datas.PromTempProxDias())
@@ -80,9 +80,9 @@ if __name__ == '__main__':
             case 4:
               print('Promedio de indice uv:', datas.PromIndiceuv())
             case 5:
-              print('El dia con mayor temperatura es:',datas.diaMayorTemperatura()[0]+',','con una temperatura de',datas.diaMayorTemperatura()[1]+'°C')
+              print('El dia con mayor temperatura es:',str(datas.diaMayorTemperatura()[0])+',','con una temperatura de',str(datas.diaMayorTemperatura()[1])+'°C')
             case 6:
-              print('El dia con menor temperatura es:',datas.diamenorTemperatura()[0]+',','con una temperatura de',datas.diamenorTemperatura()[1]+'°C')
+              print('El dia con menor temperatura es:',str(datas.diamenorTemperatura()[0])+',','con una temperatura de',str(datas.diamenorTemperatura()[1])+'°C')
 
           resp3=modd.menus(4)
       case 4:

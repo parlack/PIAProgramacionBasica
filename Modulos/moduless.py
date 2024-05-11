@@ -1,38 +1,8 @@
-import json
-import sys
+
 import re
 import urllib.request
-from colorama import Fore, Back, Style, init
-import requests
+from colorama import Fore, Style, init
 
-def ValLetrasYespacios(cadena):
-    i=0
-    state=True
-    while i<len(cadena) and state==True:
-        caracter=cadena[i]
-        if (ord(caracter)>=65 and ord(caracter)<=90) or (ord(caracter)==32) or (ord(caracter)>=97 and ord(caracter)<=122):
-            state=True
-        else:
-            state=False
-        i+=1
-        
-    if state:
-        return False
-    else:
-        return True   
-    
-def requestAPI(city):
-    ciudadtoapi = city.replace(' ','%20')
-    response = requests.request("GET", f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{ciudadtoapi}?unitGroup=metric&include=hours%2Calerts%2Cevents%2Ccurrent%2Cdays&key=UMWHQ8PEMQ54XH8C2SU2RNVPS&contentType=json")
-
-    if response.status_code!=200:
-        print(Fore.RED,'Unexpected Status code: ', response.status_code,Style.RESET_ALL)  
-        print('Intente nuevamente:')
-        requestAPI(input('Ingrese ciudad a consultar: '))
-    else:
-      jsonData =  json.dumps(response.json(),indent=4)
-      with open('Reportes_Consulta_API/Datos_completos_clima.json', 'w') as archivo:
-        archivo.write(jsonData)
 
 def ValRangoNums(inicio,fin,numero):
 
