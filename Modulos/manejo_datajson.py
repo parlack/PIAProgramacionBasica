@@ -108,7 +108,7 @@ def temperaturasMinYmaxXdia():
         fecha = dia['datetime']
         if fecha==fechaconsulta:
             print(f'Dia: {fechaconsulta}')
-            print('Min:',dia['tempmin'],'\t Max:',dia['tempmax'])
+            print(Fore.GREEN,'Min:',dia['tempmin'],'\t Max:',dia['tempmax'],Style.RESET_ALL)
             break
 
 def probprecipitacionxdia():
@@ -118,7 +118,8 @@ def probprecipitacionxdia():
         fecha = dia['datetime']
         if fecha==fechaconsulta:
             precip_prob = dia['precipprob']
-            print(f'La probabilidad de precipitacion del dia {fechaconsulta} es:',str(precip_prob)+'%')
+            print(Fore.GREEN,f'La probabilidad de precipitacion del dia {fechaconsulta} es:',str(precip_prob)+'%',Style.RESET_ALL)
+            break
             
 def Climaprox12h():
     timezone = data()['timezone']
@@ -132,16 +133,15 @@ def Climaprox12h():
         formatohora=str(str(horafecha).zfill(2))
         horacamparativa=formatohora+':00:00'
 
-        if horafecha==23:
-            horaact=horafecha-24-i
-            cambiodia+=1
+
             
         for dia in data()['days']:
             diaa=int(datafechaact.strftime('%d'))+cambiodia
             formatodia=str(str(diaa).zfill(2))
-
             fechaact=str(datafechaact.strftime(f'%Y-%m-{formatodia}'))
-            fecha = dia['datetime']
+            fecha = dia['datetime']  
+            formateadafecha = datetime.strptime(fecha, '%Y-%m-%d').strftime('%d/%m/%Y')
+            
             if fecha==fechaact:
                 
                 for time in dia['hours']:
@@ -150,8 +150,11 @@ def Climaprox12h():
                     if horacamparativa==hora_del_dia:
                         Temp= time['feelslike']
                         hora=formatohora+':00'
-                        print(Fore.GREEN,f'{fecha},{hora}')
+                        print(Fore.GREEN,f'{formateadafecha},{hora}')
                         print('Temperatura:',Temp,Style.RESET_ALL)
+        if horafecha==23:
+            horaact=horafecha-24-i
+            cambiodia+=1
        
 
 

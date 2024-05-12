@@ -93,7 +93,7 @@ def menus(numbermenu):
       return int(resp)
      
     case 5:
-      print('\Gráficas:')
+      print(Fore.BLUE,'\tGráficas:',Style.RESET_ALL)
       print('1. Grafica lineal Temperaturas por hora')
       print('2. Grafica de barras temperatura por dia')
       print('3. Grafica lineal de humedad')

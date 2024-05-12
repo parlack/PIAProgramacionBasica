@@ -35,9 +35,11 @@ if __name__ == '__main__':
                 datas.probprecipitacionxdia()
               case 5:
                 datas.requestAPI(input('Ingrese ciudad a consultar: '))
+                print('Ciudad registrada:', datas.getcity())
             resp1=modd.menus(2)
         else:
-          print('Ciudad registrada:', datas.getcity())
+          print(Fore.RED,'Error al cargar datos,Favor de conectarse a internet para tener los datos mas actualizados, se trabajara con los ultimos datos actualizados',Style.RESET_ALL)
+
 
 
       case 2:
@@ -67,6 +69,7 @@ if __name__ == '__main__':
       case 3:
         try:
           print('El registro de fecha que se tiene es desde',datas.fechas(1),'hasta',datas.fechas(15))
+          print('La ciudad con registros es:', datas.getcity())
           resp3=modd.menus(4)
           while resp3!=7:
             match resp3:
