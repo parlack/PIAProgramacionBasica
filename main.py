@@ -88,7 +88,29 @@ if __name__ == '__main__':
           print(Fore.RED,'Error al abrir los registros, favor de conectarse a internet y actualizarlos lo antes posible',Style.RESET_ALL)
 
       case 4:
-        modd.menus(5)
+        
+        try:
+          resp4=modd.menus(5)
+          while resp4!=6:
+            match resp4:
+              case 1:
+                datas.graficas(1)
+                
+              case 2:
+                datas.graficas(2)
+              
+              case 3:
+                datas.graficas(3)
+                
+              case 4:
+                datas.graficas(4)
+                
+              case 5:
+                datas.graficas(5)
+            resp4=modd.menus(5)
+        except Exception as e:
+          print(Fore.RED,'Error al abrir los registros, favor de conectarse a internet y actualizarlos lo antes posible',Style.RESET_ALL)
+          print(e)
 
       case 5:
         modd.menus(6)
@@ -107,4 +129,3 @@ if __name__ == '__main__':
     print(Fore.RED,'Error al cargar datos,Favor de conectarse a internet para tener los datos mas actualizados, se trabajara con los ultimos datos actualizados',Style.RESET_ALL)
     print('La ciudad con registros es:', datas.getcity())
     Internet=False
-

@@ -94,8 +94,15 @@ def menus(numbermenu):
      
     case 5:
       print('\Gráficas:')
-
-    case 6:
-      print('\Borrar todo:')
-
+      print('1. Grafica lineal Temperaturas por hora')
+      print('2. Grafica de barras temperatura por dia')
+      print('3. Grafica lineal de humedad')
+      print('4. Grafica lineal probabilidad de precipitacion')
+      print('5. Grafica lineal indice UV')
+      print('6. Ir a menu principal')
+      resp=input('Ingrese la opcion del menu: ')
+      while ValRangoNums(1,6,resp)==False:
+        print('Respuesta invalida, ingrese una opcion correcta')
+        resp=input('Ingrese la opcion del menu: ')
+      return int(resp)
     

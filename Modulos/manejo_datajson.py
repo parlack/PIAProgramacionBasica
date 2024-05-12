@@ -1,6 +1,6 @@
 import json 
 import pytz
-import Widgets as wg
+import Modulos.Widgets as wg
 import requests
 import json
 import matplotlib.pyplot as plt
@@ -53,7 +53,11 @@ def getcitystr():
 
 def fechas(num):
     return str(data()['days'][num-1]['datetime'])
-        
+
+def fechaact():
+        fecha_actual = datetime.now()
+        fechaformato = fecha_actual.strftime("%d-%m-%Y")
+        return fechaformato
 def getdatecalendar():
     timezone = data()['timezone']
     tz = pytz.timezone(timezone)
@@ -367,45 +371,94 @@ def diamenorTemperatura():
     wb.save(f"Reportes_datos_numéricos/reporte_{fechas(1)}_{getcitystr()}.xlsx")
 
     return dia,tempmin
-
-def graficalinealtemperaturas():
-    day_hour=[]
-    temps=[]
-    for day in data()['days']:
-        for hour in day['hours']:
-            temps.append(hour['temp']) 
-            day_hour.append(str(day['datetime'])+'_'+str(hour['datetime']))
-    plt.subplot2grid((2,2),(0,0), colspan=2, rowspan=2)
-    plt.plot(day_hour,temps)
-    plt.xticks(rotation=90, color='white')
-    plt.show()
-
-def graficabarrastemperaturas():
+def graficas(graph):
     
-    fechas = []
-    minimos = []
-    maximos = []
+    match graph:
+        case 1:
+
+            
+            day_hour=[]
+            temps=[]
+            for day in data()['days']:
+                for hour in day['hours']:
+                    temps.append(hour['temp']) 
+                    day_hour.append(str(day['datetime'])+'_'+str(hour['datetime']))
+            plt.subplot2grid((2,2),(0,0), colspan=2, rowspan=2)
+            plt.plot(day_hour,temps)
+            plt.xticks(rotation=90, color='white')
+            plt.title('Temperaturas por hora')
+            plt.savefig(f'Graficas/Temp_p_h_{getcity()}_{fechaact()}.png')
+            plt.show()
+        case 2:
+            fechas = []
+            minimos = []
+            maximos = []
+            
+            for day in data()['days']:
+                fecha = datetime.strptime(day['datetime'], '%Y-%m-%d')
+                dia_mes = fecha.strftime('%d-%m')
+                fechas.append(str(dia_mes))
+                minimos.append(day['tempmin']) 
+                maximos.append(day['tempmax']) 
     
-    for day in data()['days']:
-        fechas.append(day['datetime'])
-        minimos.append(day['tempmin']) 
-        maximos.append(day['tempmax']) 
+            centros = range(len(fechas))
+            alturas = [maximos[i] - minimos[i] for i in range(len(fechas))]
+            plt.bar(centros, alturas, bottom=minimos, color='blue', alpha=0.7, align='center', edgecolor='black')
+            plt.xlabel('Categorías')
+            plt.ylabel('Valores')
+            plt.title('Temperaturas maximas y minimas')
+            plt.xticks(centros, fechas,rotation=90)
+            plt.savefig(f'Graficas/Temp_myn_{getcity()}_{fechaact()}.png')
+            plt.show()
     
-    centros = range(len(fechas))
-
-    alturas = [maximos[i] - minimos[i] for i in range(len(fechas))]
-
-    plt.bar(centros, alturas, bottom=minimos, color='blue', alpha=0.7, align='center', edgecolor='black')
-
-    # Añadir etiquetas y título
-    plt.xlabel('Categorías')
-    plt.ylabel('Valores')
-    plt.title('Temperaturas maximas y minimas')
-
-    plt.xticks(centros, fechas,rotation=90)
-
-    plt.show()
-
-
-graficalinealtemperaturas()
+        case 3:
+            diafecha=[]
+            humedad=[]
+            for day in data()['days']:
+                fecha = datetime.strptime(day['datetime'], '%Y-%m-%d')
+                dia_mes = fecha.strftime('%d-%m')
+                humedad.append(day['humidity']) 
+                diafecha.append(str(dia_mes))
+                
+            
+            plt.subplot2grid((2,2),(0,0), colspan=2, rowspan=2)
+            plt.plot(diafecha,humedad)
+            plt.xticks(rotation=90, color='black',fontsize=6,)
+            plt.title('Grafica niveles de humedad')
+            plt.savefig(f'Graficas/niv_humed_{getcity()}_{fechaact()}.png')
+            plt.show()
     
+        case 4:
+            
+            day_hour=[]
+            precipprob=[]
+            for day in data()['days']:
+                fecha = datetime.strptime(day['datetime'], '%Y-%m-%d')
+                dia_mes = fecha.strftime('%d-%m')
+                precipprob.append(day['precipprob']) 
+                day_hour.append(str(dia_mes))
+                
+            
+            plt.subplot2grid((2,2),(0,0), colspan=2, rowspan=2)
+            plt.plot(day_hour,precipprob)
+            plt.xticks(rotation=90, color='black',fontsize=6)
+            plt.title('Grafica probabilidad de precipitaciones')
+            plt.savefig(f'Graficas/Prob_prec_{getcity()}_{fechaact()}.png')
+            plt.show()
+    
+        case 5:
+            day_hour=[]
+            indiceuv=[]
+            for day in data()['days']:
+                fecha = datetime.strptime(day['datetime'], '%Y-%m-%d')
+                dia_mes = fecha.strftime('%d-%m')
+                indiceuv.append(day['uvindex']) 
+                day_hour.append(str(dia_mes))
+            
+            plt.subplot2grid((2,2),(0,0), colspan=2, rowspan=2)
+            plt.plot(day_hour,indiceuv)
+            plt.xticks(rotation=90, color='black',fontsize=6)
+            plt.title('Grafica Indice UV')
+            plt.savefig(f'Graficas/indc_uv_{getcity()}_{fechaact()}.png')
+            plt.show()
+
