@@ -104,21 +104,23 @@ def consultTempAct():
 
 def temperaturasMinYmaxXdia():
     fechaconsulta=getdatecalendar()
+    formateadafecha = datetime.strptime(fechaconsulta, '%Y-%m-%d').strftime('%d/%m/%Y')
     for dia in data()['days']:
         fecha = dia['datetime']
         if fecha==fechaconsulta:
-            print(f'Dia: {fechaconsulta}')
+            print(f'Dia: {formateadafecha}')
             print(Fore.GREEN,'Min:',dia['tempmin'],'\t Max:',dia['tempmax'],Style.RESET_ALL)
             break
 
 def probprecipitacionxdia():
     fechaconsulta=getdatecalendar()
+    formateadafecha = datetime.strptime(fechaconsulta, '%Y-%m-%d').strftime('%d/%m/%Y')
 
     for dia in data()['days']:
         fecha = dia['datetime']
         if fecha==fechaconsulta:
             precip_prob = dia['precipprob']
-            print(Fore.GREEN,f'La probabilidad de precipitacion del dia {fechaconsulta} es:',str(precip_prob)+'%',Style.RESET_ALL)
+            print(Fore.GREEN,f'La probabilidad de precipitacion del dia {formateadafecha} es:',str(precip_prob)+'%',Style.RESET_ALL)
             break
             
 def Climaprox12h():
