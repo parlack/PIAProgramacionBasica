@@ -55,7 +55,7 @@ if __name__ == '__main__':
             while resp2!=5:
               match resp2:
                 case 1:
-                  print('La temperatura estimada actual estimada es:',str(datas.consultTempActEst())+'°C')
+                  print(Fore.GREEN,'La temperatura estimada actual estimada es:',str(datas.consultTempActEst())+'°C',Style.RESET_ALL)
                 case 2:
                   datas.Climaprox12h()
                 case 3:
