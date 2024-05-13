@@ -1,6 +1,6 @@
 # Importación de módulos y bibliotecas necesarias
-import Modulos.module1 as modd  # Importa el módulo 'module1' con el alias 'modd'
-import Modulos.manejo_datajson as datas  # Importa el módulo 'manejo_datajson' con el alias 'datas'
+import Modulos.module1 as modd  # Importa el módulo 'module1' 
+import Modulos.manejo_datajson as datas  # Importa el módulo 'manejo_datajson' 
 from colorama import Fore, Style, init  # Importa clases para manejar colores en la terminal
 
 # Verifica si este script es el principal
