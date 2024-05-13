@@ -2,7 +2,6 @@ import json
 import pytz
 import Modulos.Widgets as wg
 import requests
-import json
 import matplotlib.pyplot as plt
 from datetime import datetime
 from colorama import Fore, Style, init
