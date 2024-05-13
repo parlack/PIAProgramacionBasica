@@ -14,7 +14,7 @@ if __name__ == '__main__':
     else:
         # Mensaje de error si no hay conexión a Internet
         print(Fore.RED, 'Error al cargar datos, Favor de conectarse a internet para tener los datos más actualizados, se trabajará con los últimos datos actualizados', Style.RESET_ALL)
-        print('La ciudad con registros es:', datas.getcity())
+        print('La ciudad con registros es:', datas.getcitystr())
         Internet = False
 
     # Muestra el menú principal y realiza acciones según la opción seleccionada
@@ -28,7 +28,7 @@ if __name__ == '__main__':
                     datas.requestAPI(input('Ingrese ciudad a consultar: '))
                     resp1 = modd.menus(2)
                     while resp1 != 6:
-                        print('Ciudad registrada:', datas.getcity())
+                        print('Ciudad registrada:', datas.getcitystr())
                         match resp1:
                             case 1:
                                 print(Fore.GREEN, 'La temperatura actual es:', str(datas.consultTempAct()) + '°C', Style.RESET_ALL)
@@ -40,7 +40,7 @@ if __name__ == '__main__':
                                 datas.probprecipitacionxdia()
                             case 5:
                                 datas.requestAPI(input('Ingrese ciudad a consultar: '))
-                                print('Ciudad registrada:', datas.getcity())
+                                print('Ciudad registrada:', datas.getcitystr())
                         resp1 = modd.menus(2)
                 else:
                     # Mensaje de error si no hay conexión a Internet
@@ -49,7 +49,7 @@ if __name__ == '__main__':
             # Opción 2: Consultas de registros
             case 2:
                 try:
-                    print('La ciudad con registros es:', datas.getcity())
+                    print('La ciudad con registros es:', datas.getcitystr())
                     print('Última actualización de registros:', datas.fechas(1))
                     if datas.checardiasfecha() == False:
                         # Mensaje de advertencia si los registros son antiguos
@@ -76,7 +76,7 @@ if __name__ == '__main__':
             case 3:
                 try:
                     print('El registro de fecha que se tiene es desde', datas.fechas(1), 'hasta', datas.fechas(15))
-                    print('La ciudad con registros es:', datas.getcity())
+                    print('La ciudad con registros es:', datas.getcitystr())
                     resp3 = modd.menus(4)
                     while resp3 != 7:
                         match resp3:
@@ -138,6 +138,6 @@ if __name__ == '__main__':
         datas.requestAPI(default_city)
     else:
         print(Fore.RED, 'Error al cargar datos, Favor de conectarse a internet para tener los datos más actualizados, la siguiente ves se trabajará con los últimos datos actualizados', Style.RESET_ALL)
-        print('La ciudad con registros es:', datas.getcity())
+        print('La ciudad con registros es:', datas.getcitystr())
         Internet = False
 
